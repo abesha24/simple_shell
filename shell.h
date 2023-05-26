@@ -32,4 +32,8 @@ size_t print_list(list_t *h);
 int delete_nodeint_at_index(list_t **head, int index);
 void free_linked_list(list_t *list);
 
+char *_getenv(const char *name);
+char **copy_env(char **environ_copy, unsigned int environ_length);
+
+
 #endif

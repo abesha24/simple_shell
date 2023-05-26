@@ -42,12 +42,12 @@ int main(void)
 	
 }
 
-void create_child_wait(pid_t *child_pid, int *status, int *i)
+void create_child_wait(pid_t child_pid, int status, int i)
 {
 	if (child_pid != 0)
 	{
-		wait(&(*status));
-		*child_pid = fork();
-		*i = *i + 1;
+		wait(&(status));
+		child_pid = fork();
+		i = i + 1;
 	}
 }
