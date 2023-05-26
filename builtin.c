@@ -1,4 +1,4 @@
-#include "simple_shell.h"
+#include "shell.h"
 
 /**
  * builtin_exit - Exits the shell
@@ -8,14 +8,14 @@
  */
 int builtin_exit(char **tokens, char **env)
 {
-    (void) env;
-    int status = 0;
+(void) env;
+int status = 0;
 
-    if (tokens[1])
-        status = atoi(tokens[1]);
+if (tokens[1])
+status = atoi(tokens[1]);
 
-    free_tokens(tokens);
-    exit(status);
+free_tokens(tokens);
+exit(status);
 }
 
 /**
@@ -26,15 +26,14 @@ int builtin_exit(char **tokens, char **env)
  */
 int builtin_setenv(char **tokens, char **env)
 {
-    (void) env;
-    if (!tokens[1] || !tokens[2])
-    {
-        fprintf(stderr, "Usage: setenv KEY VALUE\n");
-        return (1);
-    }
+(void) env;
+if (!tokens[1] || !tokens[2])
+{
+fprintf(stderr, "Usage: setenv KEY VALUE\n");
+return (1);
 
-    setenv(tokens[1], tokens[2], 1);
-    return (0);
+setenv(tokens[1], tokens[2], 1);
+return (0);
 }
 
 /**
@@ -45,15 +44,15 @@ int builtin_setenv(char **tokens, char **env)
  */
 int builtin_unsetenv(char **tokens, char **env)
 {
-    (void) env;
-    if (!tokens[1])
-    {
-        fprintf(stderr, "Usage: unsetenv KEY\n");
-        return (1);
-    }
+(void) env;
+if (!tokens[1])
+{
+fprintf(stderr, "Usage: unsetenv KEY\n");
+return (1);
+}
 
-    unsetenv(tokens[1]);
-    return (0);
+unsetenv(tokens[1]);
+return (0);
 }
 
 /**
@@ -64,21 +63,21 @@ int builtin_unsetenv(char **tokens, char **env)
  */
 int builtin_cd(char **tokens, char **env)
 {
-    (void) env;
-    char *path;
+(void) env;
+char *path;
 
-    if (!tokens[1])
-        path = getenv("HOME");
-    else
-        path = tokens[1];
+if (!tokens[1])
+path = getenv("HOME");
+else
+path = tokens[1];
 
-    if (chdir(path) == -1)
-    {
-        perror("cd");
-        return (1);
-    }
+if (chdir(path) == -1)
+{
+perror("cd");
+return (1);
+}
 
-    return (0);
+return (0);
 }
 
 /**
@@ -89,22 +88,22 @@ int builtin_cd(char **tokens, char **env)
  */
 int execute_builtin(char **tokens, char **env)
 {
-    (void) env;
-    int i;
-    builtin_pair_t builtins[] = {
-        {"exit", builtin_exit},
-        {"setenv", builtin_setenv},
-        {"unsetenv", builtin_unsetenv},
-        {"cd", builtin_cd},
-    };
+(void) env;
+int i;
+builtin_pair_t builtins[] = {
+{"exit", builtin_exit},
+{"setenv", builtin_setenv},
+{"unsetenv", builtin_unsetenv},
+{"cd",  builtin_cd},
+};
 
-    for (i = 0; builtins[i].name; i++)
-    {
-        if (strcmp(tokens[0], builtins[i].name) == 0)
-            return (builtins[i].func(tokens, env));
-    }
+for (i = 0; builtins[i].name; i++)
+{
+if (strcmp(tokens[0], builtins[i].name) == 0)
+return (builtins[i].func(tokens, env));
+}
 
-    return (-1);
+return (-1);
 }
 
 /**
@@ -113,12 +112,12 @@ int execute_builtin(char **tokens, char **env)
  */
 void free_tokens(char **tokens)
 {
-    int i;
+int i;
 
-    for (i = 0; tokens[i] != NULL; i++)
-    {
-        free(tokens[i]);
-    }
+for (i = 0; tokens[i] != NULL; i++)
+{
+free(tokens[i]);
+}
 
-    free(tokens);
+free(tokens);
 }
